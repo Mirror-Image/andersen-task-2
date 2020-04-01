@@ -1,0 +1,25 @@
+.button {
+  margin: 20px;
+  padding: 15px;
+  min-width: 250px;
+  //color: #ffffff;
+  color: #ff7200;
+  font-size: 1.25rem;
+  text-decoration: none;
+  text-align: center;
+  font-weight: bold;
+  //border: 4px solid #ffffff;
+  border: 4px solid #ff7200;
+  border-radius: 10px;
+  //background-color: #ff7200;
+  background-color: #ffffff;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    color: #ffffff;
+    border: 4px solid #ffffff;
+    background-color: #ff7200;
+    cursor: pointer;
+    transform: scale(1.05);
+  }
+}
