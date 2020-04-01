@@ -11,6 +11,6 @@ First player can choose which symbol he will use (X or O).
 The game is over when one of players fill three fields as in classic tic tac toe game.
 Also, the game should have "Score" field, field showing who is playing. When user reload the page, state of the game should be saved.
 ---
-The game should be implemented with React and Redux. Typescript - optional.
+The game should be implemented with React and Redux. Typescript - optional
 
 ---
