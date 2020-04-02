@@ -12,13 +12,13 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      volume: true
+      menuMusic: true
     }
   }
 
   handleVolume = () => {
     this.setState({
-      volume: !this.state.volume
+      menuMusic: !this.state.menuMusic
     })
   }
 
@@ -31,7 +31,7 @@ class App extends React.Component {
           <Route path="/create-game" component={CreateGame} />
           <Route path="/" exact component={MainMenu} />
         </Switch>
-        <FontAwesomeIcon onClick={this.handleVolume} className="icon" icon={this.state.volume ? faVolumeUp : faVolumeMute} />
+        <FontAwesomeIcon onClick={this.handleVolume} className="icon" icon={this.state.menuMusic ? faVolumeUp : faVolumeMute} />
       </div>
     );
   }

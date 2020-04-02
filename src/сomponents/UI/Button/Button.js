@@ -7,6 +7,13 @@ export default function Button(props) {
 
 
   return (
-    <NavLink to={props.to} className="button">{props.name}</NavLink>
+    <NavLink
+      onClick={props.onClick}
+      to={props.to}
+      className={props.className + (props.isActive ? "-active" : "")}
+      name={props.name}
+    >
+      {props.name}
+    </NavLink>
   )
 }

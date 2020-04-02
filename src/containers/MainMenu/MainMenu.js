@@ -20,8 +20,8 @@ export default function MainMenu() {
           <span>e</span> game!</h1>
       </header>
       <main className="main-menu__main">
-        <Button to="/create-game" name="Create new game"/>
-        <Button to="/ladder" name="Ladder"/>
+        <Button to="/create-game" name="Create new game" className="control-button"/>
+        <Button to="/ladder" name="Ladder" className="control-button"/>
       </main>
     </React.Fragment>
   );
