@@ -8,30 +8,27 @@ export default class CreateGame extends Component {
   constructor(props) {
     super(props);
 
-
-
     this.state = {
       player1: {
         name: '',
         symbolX: false,
-        symbolY: false
       },
       player2: {
         name: '',
         symbolX: false,
-        // symbolY: false
       }
     };
   }
 
   handleNameChange = (e) => {
+    const player = e.target.name.toLowerCase().replace('-', '');
     // TODO: check data with store
 
+
     this.setState({
-      [e.target.name.toLowerCase().replace('-', '')]: {
+      [player]: {
         name: e.target.value,
-        symbolX: this.state.player1.symbolX,
-        symbolY: this.state.player1.symbolY
+        symbolX: this.state[player].symbolX,
       }
     });
   }
@@ -43,22 +40,17 @@ export default class CreateGame extends Component {
   handleSymbolChange = (e) => {
     const name =  e.target.name;
     const symbolX = this.state.player1.symbolX;
-    const symbolY = this.state.player1.symbolY;
 
     this.setState({
       player1: {
         name: this.state.player1.name,
         symbolX: name === 'X' || symbolX ? !symbolX : symbolX,
-        symbolY: name === 'Y' || symbolY ? !symbolY : symbolY,
       },
       player2: {
         name: this.state.player2.name,
         symbolX: name === 'X' || symbolX ? symbolX : !symbolX,
-        symbolY: name === 'Y' || symbolY ? symbolY : !symbolY,
       }
     });
-
-    console.log(e.target)
   }
 
   render() {
@@ -72,7 +64,7 @@ export default class CreateGame extends Component {
         <p className="create-game-symbol-description">{this.state.player1.name || 'Player-1'} choose your symbol:</p>
         <div className="create-game__choose-symbol-block">
           <Button onClick={this.handleSymbolChange} to="#" className="choose-button" name="X" isActive={this.state.player1.symbolX} />
-          <Button onClick={this.handleSymbolChange} to="#" className="choose-button" name="Y" isActive={this.state.player1.symbolY} />
+          <Button onClick={this.handleSymbolChange} to="#" className="choose-button" name="Y" isActive={!this.state.player1.symbolX} />
         </div>
 
         <Input
@@ -81,7 +73,7 @@ export default class CreateGame extends Component {
           value={this.state.player1.name}
         />
         <p className="create-game-symbol-description">
-          {this.state.player1.symbolX || this.state.player1.symbolY
+          {this.state.player1.symbolX || this.state.player2.symbolX
             ? `${this.state.player2.name || 'Player-2'} your symbol is ${this.state.player2.symbolX ? 'X' : 'Y'}`
             : ''}
         </p>
