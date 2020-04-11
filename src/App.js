@@ -6,26 +6,24 @@ import CreateGame from "./containers/CreateGame/CreateGame"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faVolumeMute, faVolumeUp} from '@fortawesome/free-solid-svg-icons'
 import PlayGame from "./containers/PlayGame/PlayGame";
+import {createStore} from "redux";
+import rootReducer from "./store/reducers/rootReducer";
 
 
-const data = {
-  currentPlayers: [
-    {name: '', symbolX: false, score: 0},
-    {name: '', symbolX: false, score: 0}
-  ],
-  settings: {
-    menuMusic: true
-  }
-};
-
-export const Data = React.createContext(data);
+export const store = createStore(rootReducer)
 
 class App extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      menuMusic: true
+      Players: [
+        {name: 'Test1', symbolX: false, score: 110},
+        {name: 'Test2', symbolX: true, score: 220}
+      ],
+      settings: {
+        menuMusic: true
+      }
     }
   }
 

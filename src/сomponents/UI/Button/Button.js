@@ -5,15 +5,26 @@ import {NavLink} from "react-router-dom"
 
 export default function Button(props) {
 
-
-  return (
-    <NavLink
-      onClick={props.onClick}
-      to={props.to}
-      className={props.className + (props.isActive ? "-active" : "")}
-      name={props.name}
-    >
-      {props.name}
-    </NavLink>
-  )
+  if (props.to) {
+    return (
+      <NavLink
+        onClick={props.onClick}
+        to={props.to}
+        className={props.className + (props.isActive ? "-active" : "")}
+        name={props.name}
+      >
+        {props.name}
+      </NavLink>
+    );
+  } else {
+    return (
+      <button
+        onClick={props.onClick}
+        className={props.className + (props.isActive ? "-active" : "")}
+        name={props.name}
+      >
+        {props.name}
+      </button>
+    );
+  }
 }
