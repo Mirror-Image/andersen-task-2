@@ -20,6 +20,17 @@ class CreateGame extends Component {
     };
   }
 
+  componentWillMount() {
+    if (this.props.player1.name && this.props.player2.name) {
+      this.setState({
+        player1: true,
+        player2: true,
+        symbol: true,
+        isFormValid: true,
+      })
+    }
+  }
+
   isFormValid() {
     this.setState((prevProps) => {
       if (prevProps.player1 && prevProps.player2 && prevProps.symbol) {
@@ -51,7 +62,7 @@ class CreateGame extends Component {
   isSymbolChecked() {
     this.setState((prevProps) => {
       return {
-        symbol: !prevProps.symbol
+        symbol: true
       };
     })
 
@@ -60,7 +71,7 @@ class CreateGame extends Component {
 
   handleNameChange = (e) => {
     const player = e.target.name.toLowerCase().replace('-', '');
-    const playerName = e.target.value.trim()
+    const playerName = e.target.value.trim();
 
     const {name, ...other} = this.props[player];
     const item = {
@@ -87,7 +98,7 @@ class CreateGame extends Component {
         ...other2,
         symbolX: name === 'X' || symbolX ? symbolX : !symbolX,
       }
-    }
+    };
 
     this.props.addSymbol(item);
     this.isSymbolChecked();
@@ -132,7 +143,6 @@ class CreateGame extends Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <React.Fragment>
         <PopUp text={this.state.popUpText} visible={this.state.visible} />
@@ -162,7 +172,7 @@ class CreateGame extends Component {
         <Input
           onChange={this.handleNameChange}
           name="Player-2"
-          value={this.props.player1.name}
+          value={this.props.player2.name}
         />
         <p className="create-game-symbol-description">
           {this.props.player1.symbolX || this.props.player2.symbolX

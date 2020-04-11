@@ -1,6 +1,6 @@
 const initialState = {
-  player1: {name: 'Bastard', symbolX: false, score: 0},
-  player2: {name: 'Kitty', symbolX: false, score: 0},
+  player1: {name: '', symbolX: false, score: 0},
+  player2: {name: '', symbolX: false, score: 0},
   settings: {
     menuMusic: true
   }
