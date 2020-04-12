@@ -1,10 +1,10 @@
 import React from "react";
-
+import './Block.scss'
 
 export default function Block(props) {
   return (
     <div
-      className="play-game__game-desk-block"
+      className={props.className}
       onClick={props.onClick}
     >
       {props.value}

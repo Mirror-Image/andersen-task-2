@@ -6,7 +6,6 @@ const initialState = {
   }
 };
 
-
 export default function rootReducer(state = initialState, action) {
   switch(action.type) {
     case 'ADD NAME':
@@ -16,6 +15,18 @@ export default function rootReducer(state = initialState, action) {
       }
 
     case 'ADD SYMBOL':
+      return {
+        ...state,
+        ...action.item
+      }
+
+    case 'TOGGLE_MENU_MUSIC':
+      return {
+        ...state,
+        settings: {menuMusic: !state.settings.menuMusic}
+      }
+
+    case 'ADD_COUNT':
       return {
         ...state,
         ...action.item

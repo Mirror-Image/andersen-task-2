@@ -3,13 +3,14 @@
   padding: 15px;
   min-width: 250px;
   color: #ff7200;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   font-size: 1.25rem;
   text-decoration: none;
   text-align: center;
   font-weight: bold;
   border: 4px solid #ff7200;
   border-radius: 10px;
+  outline: none;
   background-color: #ffffff;
   transition: all 0.3s ease-in-out;
 
@@ -30,8 +31,10 @@
   text-decoration: none;
   text-align: center;
   font-weight: bold;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   border: 4px solid #ff7200;
   border-radius: 10px;
+  outline: none;
   background-color: #ff7200;
 
   &:hover {
@@ -52,6 +55,7 @@
     border-radius: 10px;
     color: #ffffff;
     border: 4px solid #ffffff;
+    outline: none;
     background-color: #ff7200;
     transform: scale(1);
   }

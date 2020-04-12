@@ -8,30 +8,12 @@ import {faVolumeMute, faVolumeUp} from '@fortawesome/free-solid-svg-icons'
 import PlayGame from "./containers/PlayGame/PlayGame";
 import {createStore} from "redux";
 import rootReducer from "./store/reducers/rootReducer";
+import {connect} from "react-redux";
 
 
 export const store = createStore(rootReducer)
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      Players: [
-        {name: 'Test1', symbolX: false, score: 110},
-        {name: 'Test2', symbolX: true, score: 220}
-      ],
-      settings: {
-        menuMusic: true
-      }
-    }
-  }
-
-  handleVolume = () => {
-    this.setState((prevState) => {
-      return {menuMusic: !prevState.menuMusic};
-    })
-  }
 
   render() {
     return (
@@ -42,10 +24,24 @@ class App extends React.Component {
           <Route path="/create-game" component={CreateGame} />
           <Route path="/" exact component={MainMenu} />
         </Switch>
-        <FontAwesomeIcon onClick={this.handleVolume} className="icon" icon={this.state.menuMusic ? faVolumeUp : faVolumeMute} />
+        <FontAwesomeIcon onClick={this.props.toggleMenuMusic} className="icon" icon={this.props.settings.menuMusic ? faVolumeUp : faVolumeMute} />
       </div>
     );
   }
 }
 
-export default App;
+function mapStateToProps(state) {
+  return {
+    settings: {
+      menuMusic: state.settings.menuMusic
+    }
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    toggleMenuMusic: () => dispatch({type: 'TOGGLE_MENU_MUSIC'})
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
