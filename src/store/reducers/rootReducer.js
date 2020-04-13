@@ -1,4 +1,7 @@
-const initialState = {
+const test = localStorage.getItem('lastSession');
+
+
+const initialState = JSON.parse(test) || {
   player1: {name: '', symbolX: false, score: 0},
   player2: {name: '', symbolX: false, score: 0},
   settings: {

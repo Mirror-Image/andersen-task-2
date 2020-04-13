@@ -11,7 +11,7 @@ class PlayGame extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      fieldsData: Array(9).fill(null),
+      fieldsData: this.props.fieldsData || Array(9).fill(null),
       xIsNext: true,
       isWinner: false
     }
@@ -27,14 +27,6 @@ class PlayGame extends React.Component {
     );
   }
 
-  /*componentWillMount() {
-    if (localStorage.getItem('fieldsData')) {
-      const test = localStorage.getItem('fieldsData')
-
-      console.log(JSON.parse(test));
-    }
-  }*/
-
   handleClick(i) {
     const squaresArray = this.state.fieldsData;
 
@@ -43,9 +35,20 @@ class PlayGame extends React.Component {
     }
 
     squaresArray[i] = this.state.xIsNext ? "X" : "O";
-    this.setState({
-      fieldsData: squaresArray,
-      xIsNext: !this.state.xIsNext
+    this.setState((prevProps) => {
+      console.log(!prevProps.xIsNext)
+
+      return {
+        fieldsData: squaresArray,
+        xIsNext: !prevProps.xIsNext
+      }
+    }, () => {
+      const data = {
+        ...this.props,
+        ...this.state,
+      }
+      const test2 = JSON.stringify(data)
+      localStorage.setItem('lastSession', test2);
     });
 
     if (calculateWinner(squaresArray)) {
@@ -72,12 +75,9 @@ class PlayGame extends React.Component {
       xIsNext: true,
       isWinner: false
     });
-  }
 
-  /*componentWillUnmount() {
-    const test2 = JSON.stringify(this.state.fieldsData)
-    localStorage.setItem('fieldsData', test2);
-  }*/
+    localStorage.removeItem('lastSession')
+  }
 
   render() {
     return (
@@ -129,6 +129,10 @@ function mapStateToProps(state) {
       name: state.player2.name,
       symbolX: state.player2.symbolX,
       score: state.player2.score
+    },
+    fieldsData: state.fieldsData,
+    settings: {
+      menuMusic: state.settings.menuMusic
     }
   }
 }

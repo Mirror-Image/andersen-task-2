@@ -20,7 +20,7 @@ class CreateGame extends Component {
     };
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     if (this.props.player1.name && this.props.player2.name) {
       this.setState({
         player1: true,
