@@ -4,3 +4,10 @@ export function addCount(item) {
     item
   }
 }
+
+export function resetGame(item) {
+  return {
+    type: 'RESET_GAME',
+    item
+  }
+}

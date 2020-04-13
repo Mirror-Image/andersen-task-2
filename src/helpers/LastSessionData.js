@@ -1,0 +1,1 @@
+export const lastSessionData = JSON.parse(localStorage.getItem('lastSession'));

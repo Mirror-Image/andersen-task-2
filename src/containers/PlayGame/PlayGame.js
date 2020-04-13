@@ -4,7 +4,7 @@ import Button from "../../сomponents/UI/Button/Button";
 import Block from "../../сomponents/Block/Block";
 import calculateWinner from "../../helpers/CalculateWinner";
 import {connect} from "react-redux";
-import {addCount} from "../../store/actions/play";
+import {addCount, resetGame} from "../../store/actions/play";
 
 
 class PlayGame extends React.Component {
@@ -12,7 +12,7 @@ class PlayGame extends React.Component {
     super(props);
     this.state = {
       fieldsData: this.props.fieldsData || Array(9).fill(null),
-      xIsNext: true,
+      xIsNext: this.props.xIsNext,
       isWinner: false
     }
   }
@@ -36,8 +36,6 @@ class PlayGame extends React.Component {
 
     squaresArray[i] = this.state.xIsNext ? "X" : "O";
     this.setState((prevProps) => {
-      console.log(!prevProps.xIsNext)
-
       return {
         fieldsData: squaresArray,
         xIsNext: !prevProps.xIsNext
@@ -47,8 +45,8 @@ class PlayGame extends React.Component {
         ...this.props,
         ...this.state,
       }
-      const test2 = JSON.stringify(data)
-      localStorage.setItem('lastSession', test2);
+      const sessionData = JSON.stringify(data)
+      localStorage.setItem('lastSession', sessionData);
     });
 
     if (calculateWinner(squaresArray)) {
@@ -76,6 +74,13 @@ class PlayGame extends React.Component {
       isWinner: false
     });
 
+    this.props.resetGame(
+      {
+        fieldsData: Array(9).fill(null),
+        settings: {
+          menuMusic: true
+        }
+      })
     localStorage.removeItem('lastSession')
   }
 
@@ -112,6 +117,11 @@ class PlayGame extends React.Component {
               to={false}
               name="Reset"
             />
+            <Button
+              className="control-button"
+              to="/"
+              name="Quit"
+            />
           </div>
         </div>
       </React.Fragment>
@@ -130,6 +140,7 @@ function mapStateToProps(state) {
       symbolX: state.player2.symbolX,
       score: state.player2.score
     },
+    xIsNext: state.xIsNext,
     fieldsData: state.fieldsData,
     settings: {
       menuMusic: state.settings.menuMusic
@@ -141,6 +152,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     addCount: (item) => dispatch(addCount(item)),
+    resetGame: (item) =>dispatch(resetGame(item))
   }
 }
 

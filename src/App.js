@@ -1,5 +1,5 @@
 import React from 'react';
-import {Route, Switch} from 'react-router-dom'
+import {Redirect, Route, Switch} from 'react-router-dom'
 import './app.scss';
 import MainMenu from "./containers/MainMenu/MainMenu"
 import CreateGame from "./containers/CreateGame/CreateGame"
@@ -9,23 +9,29 @@ import PlayGame from "./containers/PlayGame/PlayGame";
 import {createStore} from "redux";
 import rootReducer from "./store/reducers/rootReducer";
 import {connect} from "react-redux";
+import {lastSessionData} from "./helpers/LastSessionData";
 
 
 export const store = createStore(rootReducer)
 
 class App extends React.Component {
-
   render() {
     return (
-      <div className="app">
-        <Switch>
-          <Route path="/play-game" component={PlayGame} />
-          {/*<Route path="/ladder" component={} />*/}
-          <Route path="/create-game" component={CreateGame} />
-          <Route path="/" exact component={MainMenu} />
-        </Switch>
-        <FontAwesomeIcon onClick={this.props.toggleMenuMusic} className="icon" icon={this.props.settings.menuMusic ? faVolumeUp : faVolumeMute} />
-      </div>
+    <div className="app">
+
+      {lastSessionData ? <Redirect push to={lastSessionData.location.pathname} /> : null}
+
+      <Switch>
+        <Route path="/play-game" component={PlayGame} />
+        {/*<Route path="/ladder" component={} />*/}
+        <Route path="/create-game" component={CreateGame} />
+        <Route path="/" exact component={MainMenu} />
+      </Switch>
+      <FontAwesomeIcon
+        onClick={this.props.toggleMenuMusic}
+        className="icon"
+        icon={this.props.settings.menuMusic ? faVolumeUp : faVolumeMute} />
+    </div>
     );
   }
 }

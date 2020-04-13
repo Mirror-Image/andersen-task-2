@@ -151,7 +151,9 @@ class CreateGame extends Component {
           name="Player-1"
           value={this.props.player1.name}
         />
-        <p className="create-game-symbol-description">{this.props.player1.name || 'Player-1'} choose your symbol:</p>
+        <p className="create-game-symbol-description">
+          {this.props.player1.name || 'Player-1'} choose your symbol:
+        </p>
 
         <div className="create-game__choose-symbol-block">
           <Button
@@ -176,8 +178,10 @@ class CreateGame extends Component {
         />
         <p className="create-game-symbol-description">
           {this.props.player1.symbolX || this.props.player2.symbolX
-            ? `${this.props.player2.name || 'Player-2'} your symbol is ${this.props.player2.symbolX ? 'X' : 'Y'}`
-            : ''}
+            ? `${this.props.player2.name 
+              || 'Player-2'} your symbol is ${this.props.player2.symbolX 
+                ? 'X' : 'Y'}`
+                  : ''}
         </p>
 
         <Button
@@ -191,7 +195,6 @@ class CreateGame extends Component {
           to="/"
           name="Back"
         />
-
       </React.Fragment>
     );
   }
