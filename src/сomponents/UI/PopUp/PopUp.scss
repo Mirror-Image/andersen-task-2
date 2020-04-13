@@ -1,4 +1,5 @@
 .pop-up {
+  padding: 10px;
   position: absolute;
   display: flex;
   justify-content: center;
@@ -24,4 +25,21 @@
     font-size: 1.5rem;
     font-weight: bold;
   }
-}
+
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+
+    button {
+      margin: 5px;
+      padding: 5px;
+      min-width: 70px;
+
+      &:hover {
+        color: #ffffff;
+        border: 4px solid #ff7200;
+        transform: scale(1);
+      }
+    }
+  }
+ }

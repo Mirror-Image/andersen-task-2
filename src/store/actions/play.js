@@ -11,3 +11,10 @@ export function resetGame(item) {
     item
   }
 }
+
+export function updateFieldsData(item) {
+  return {
+    type: 'UPDATE_FIELDS_DATA',
+    item
+  }
+}

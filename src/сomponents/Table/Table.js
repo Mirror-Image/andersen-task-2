@@ -2,6 +2,8 @@ import React from "react"
 import './Table.scss'
 
 
+// for Ladder component!!!
+
 export default function Table(props) {
 
   return (

@@ -1,9 +1,10 @@
 import {lastSessionData} from "../../helpers/LastSessionData";
 
 
-const initialState = lastSessionData || {
+const initialState = lastSessionData() || {
   player1: {name: '', symbolX: false, score: 0},
   player2: {name: '', symbolX: false, score: 0},
+  fieldsData: Array(9).fill(null),
   xIsNext: true,
   settings: {
     menuMusic: true

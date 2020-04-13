@@ -4,7 +4,8 @@ import Input from "../../сomponents/UI/Input/Input";
 import Button from "../../сomponents/UI/Button/Button";
 import {connect} from 'react-redux'
 import {addName, addSymbol} from "../../store/actions/create";
-import PopUp from "../../сomponents/PopUp/PopUp";
+import PopUp from "../../сomponents/UI/PopUp/PopUp";
+import {resetGame} from "../../store/actions/play";
 
 
 class CreateGame extends Component {
@@ -128,7 +129,6 @@ class CreateGame extends Component {
           popUpText: 'Please, choose your symbol!'
         }
       });
-
     }
 
     this.popUptimeOut = setTimeout(() => {
@@ -136,6 +136,26 @@ class CreateGame extends Component {
         return {visible: prevProp.isFormValid}
       });
     }, 1700);
+  }
+
+  resetPreviousData = () => {
+    const {...other1} = this.props.player1;
+    const {...other2} = this.props.player2;
+
+    this.props.resetGame({
+      player1: {
+        ...other1,
+        score: 0
+      },
+      player2: {
+        ...other2,
+        score: 0
+      },
+      fieldsData: Array(9).fill(null),
+      settings: {
+        menuMusic: true
+      }
+    });
   }
 
   componentWillUnmount() {
@@ -185,7 +205,7 @@ class CreateGame extends Component {
         </p>
 
         <Button
-          onClick={!this.state.isFormValid ? this.handPopUp : null }
+          onClick={!this.state.isFormValid ? this.handPopUp : this.resetPreviousData }
           className="control-button"
           to={this.state.isFormValid ? "/play-game" : null }
           name="Join Game"
@@ -219,7 +239,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     addName: (item) => dispatch(addName(item)),
-    addSymbol: (item) => dispatch(addSymbol(item))
+    addSymbol: (item) => dispatch(addSymbol(item)),
+    resetGame: (item) => dispatch(resetGame(item))
   }
 }
 

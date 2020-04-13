@@ -4,38 +4,42 @@ import Button from "../../сomponents/UI/Button/Button";
 import Block from "../../сomponents/Block/Block";
 import calculateWinner from "../../helpers/CalculateWinner";
 import {connect} from "react-redux";
-import {addCount, resetGame} from "../../store/actions/play";
+import {addCount, resetGame, updateFieldsData} from "../../store/actions/play";
+import PopUp from "../../сomponents/UI/PopUp/PopUp";
+import {Redirect} from "react-router-dom";
 
 
 class PlayGame extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      fieldsData: this.props.fieldsData || Array(9).fill(null),
-      xIsNext: this.props.xIsNext,
-      isWinner: false
+      xIsNext: true,
+      isWinner: false,
+      isQuit: false,
     }
   }
 
   renderSquare(i) {
     return (
       <Block
-        value={this.state.fieldsData[i]}
+        value={this.props.fieldsData[i]}
         onClick={() => this.handleClick(i)}
-        className={"play-game__game-desk-block " + this.state.fieldsData[i]}
+        className={"play-game__game-desk-block " + this.props.fieldsData[i]}
       />
     );
   }
 
   handleClick(i) {
-    const squaresArray = this.state.fieldsData;
+    console.log(this.props.fieldsData);
+    const squaresArray = this.props.fieldsData;
 
     if (calculateWinner(squaresArray) || squaresArray[i]) {
       return;
     }
 
     squaresArray[i] = this.state.xIsNext ? "X" : "O";
-    this.setState((prevProps) => {
+    // TODO: REDUX
+    /*this.setState((prevProps) => {
       return {
         fieldsData: squaresArray,
         xIsNext: !prevProps.xIsNext
@@ -43,11 +47,36 @@ class PlayGame extends React.Component {
     }, () => {
       const data = {
         ...this.props,
-        ...this.state,
+        fieldsData: this.state.fieldsData,
+        xIsNext: this.state.xIsNext
       }
       const sessionData = JSON.stringify(data)
       localStorage.setItem('lastSession', sessionData);
-    });
+    });*/
+
+    this.setState((prevProps) => {
+      return {
+        xIsNext: !prevProps.xIsNext
+      }
+    }, () => {
+      const data = {
+        fieldsData: squaresArray,
+        xIsNext: !this.props.xIsNext
+      }
+      this.props.updateFieldsData(data);
+
+      const sessionData = JSON.stringify(this.props)
+      localStorage.setItem('lastSession', sessionData);
+    }
+    );
+
+    /*const data = {
+      fieldsData: squaresArray,
+      xIsNext: !this.props.xIsNext
+    }
+    this.props.updateFieldsData(data);*/
+
+
 
     if (calculateWinner(squaresArray)) {
       const player = (this.props.player1.symbolX === this.state.xIsNext ? 'player1' : 'player2' );
@@ -69,7 +98,6 @@ class PlayGame extends React.Component {
 
   handleResetGame = () => {
     this.setState({
-      fieldsData: Array(9).fill(null),
       xIsNext: true,
       isWinner: false
     });
@@ -84,10 +112,60 @@ class PlayGame extends React.Component {
     localStorage.removeItem('lastSession')
   }
 
+  handleQuitGame = () => {
+    this.setState((prevProp) => {
+      return {
+        visible: !prevProp.isFormValid,
+      }
+    });
+  }
+
+  isSaveData = (e) => {
+    const response = e.target.name;
+
+    if (response === "Yes") {
+      this.setState({
+        isQuit: true
+      });
+
+    } else {
+      this.setState({
+        xIsNext: true,
+        isWinner: false,
+        isQuit: true
+      });
+
+      this.props.resetGame(
+        {
+          fieldsData: Array(9).fill(null),
+          player1: {name: '', symbolX: false, score: 0},
+          player2: {name: '', symbolX: false, score: 0},
+          settings: {
+            menuMusic: true
+          }
+        })
+      localStorage.removeItem('lastSession')
+    }
+  }
+
   render() {
     return (
       <React.Fragment>
+        {this.state.isQuit ? <Redirect push to="/" /> : null}
+
         <div className="play-game">
+          <PopUp text="Do you want to save game?" visible={this.state.visible} >
+            <Button
+              className="control-button"
+              onClick={this.isSaveData}
+              name="Yes"
+            />
+            <Button
+              className="control-button"
+              onClick={this.isSaveData}
+              name="No"
+            />
+          </PopUp>
           <div className="play-game__score">
             <div className={"play-game__score-player " + (this.props.player1.symbolX ? "x" : "y")}>
               <p className="play-game__score-player-name">{this.props.player1.name}</p>
@@ -114,12 +192,11 @@ class PlayGame extends React.Component {
             <Button
               className="control-button"
               onClick={this.handleResetGame}
-              to={false}
               name="Reset"
             />
             <Button
               className="control-button"
-              to="/"
+              onClick={this.handleQuitGame}
               name="Quit"
             />
           </div>
@@ -152,6 +229,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     addCount: (item) => dispatch(addCount(item)),
+    updateFieldsData: (item) => dispatch(updateFieldsData(item)),
     resetGame: (item) =>dispatch(resetGame(item))
   }
 }

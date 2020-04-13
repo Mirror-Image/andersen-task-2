@@ -8,6 +8,7 @@ export default function PopUp(props) {
       <p className="pop-up__text">
         {props.text}
       </p>
+      {<div className="pop-up__buttons">{props.children}</div> || null}
     </div>
   )
 }
