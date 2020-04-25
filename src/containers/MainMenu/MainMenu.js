@@ -1,10 +1,10 @@
 import React from "react";
 import './MainMenu.scss'
 import Button from "../../сomponents/UI/Button/Button";
+import {lastSessionData} from "../../helpers/LastSessionData";
 
 
 export default function MainMenu() {
-
   return (
     <React.Fragment>
       <header className="main-menu__header">
@@ -20,8 +20,12 @@ export default function MainMenu() {
           <span>e</span> game!</h1>
       </header>
       <main className="main-menu__main">
-        <Button to="/create-game" name="Create new game"/>
-        <Button to="/ladder" name="Ladder"/>
+        {lastSessionData() ?
+          <Button to="/play-game" name="Resume game" className="control-button"/>
+           : null
+        }
+        <Button to="/create-game" name="Create new game" className="control-button"/>
+        <Button to="/ladder" name="Ladder" className="control-button"/>
       </main>
     </React.Fragment>
   );
