@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 Tic-Tac-Toe game
 =====================
 ***Description:***
